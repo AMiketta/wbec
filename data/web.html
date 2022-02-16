@@ -30,40 +30,34 @@
 			<br><br>
 		</div>
 		<div id='main'>
-			<table>
-				<tr>
-					<td>Stromlimit</td>
-					<td align="right"><span id='currLim'>-</span></td>
-					<td>A</td>
-				</tr>
-				<tr>
-					<td>Fzg. verbunden</td>
-					<td align="center" colspan="2"><span id='carStat'>-</span></td>
-				</tr>
-				<tr>
-					<td>WB erlaubt Laden</td>
-					<td align="center" colspan="2"><span id='wbStat'>-</span></td>
-				</tr>
-				<tr>
-					<td>Ladeleistung</td>
-					<td align="right"><span id='power'>-</span></td>
-					<td>W</td>
-				</tr>
-				<tr>
-					<td>Energiez&auml;hler</td>
-					<td align="right"><span id='energyI'>-</span></td>
-					<td>kWh</td>
-				</tr>
-				<tr id='trPFox1'>
-					<td>Bezug(+)/Einsp.(-)</td>
-					<td align="right"><span id='watt'>-</span></td>
-					<td>W</td>
-				</tr>
-				<tr id='trPFox2'>
-					<td>PV-Laden</td>
-					<td align="center" colspan="2"><span id='pvMode'>-</span></td>
-				</tr>
-			</table>
+			<div class="row">
+				<label>Stromlimit</label>
+				<span class="field"><span id='currLim'>-</span><span>A</span></span>
+			</div>
+			<div class="row">
+				<label>Fzg. verbunden</label>
+				<span class="field"><span id='carStat'>-</span></span>
+			</div>
+			<div class="row">
+				<label>WB erlaubt Laden</label>
+				<span class="field"><span id='wbStat'>-</span></span>
+			</div>
+			<div class="row">
+				<label>Ladeleistung</label>
+				<span class="field"><span id='power'>-</span><span>W</span></span>
+			</div>
+			<div class="row">
+				<label>Energiez&auml;hler</label>
+				<span class="field"><span id='energyI'>-</span><span>kwh</span></span>
+			</div>
+			<div class="row" id='trPFox1'>
+				<label>Bezug(+)/Einsp.(-)</label>
+				<span class="field"><span id='watt'>-</span><span>W</span></span>
+			</div>
+			<div class="row" id='trPFox2'>
+				<label>PV-Laden</label>
+				<span class="field"><span id='pvMode'>-</span></span>
+			</div>
 		</div>
 		<div id='pvLaden'>
 		<h4>PV Laden mit powerfox</h4>
@@ -78,23 +72,20 @@
 
   <style>
 	body {
-	    font-family: 'Roboto', sans-serif;
+	    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 	    font-size: 22pt;
 	    margin: 0;
 	    margin-top: 6px;
 	}
-
 	h1 {
 	    font-size: 1.5em;
 	    font-weight: normal;
 	    margin: 0px 0px 12px 0px;
 	}
-
 	button {
 	    font-size: 14pt;
 	    width: 6em;
 	}
-
 	center {
 	    padding: 1em;
 	    margin: auto;
@@ -102,60 +93,61 @@
 	    box-shadow: #777 2px 2px 5px;
 	    box-sizing: border-box;
 	}
-
 	#loading {
 		margin-bottom: 12px;
 	}
-
 	.slidecontainer {
-		width: 50%; /* Width of the outside container */
+		width: 50%; 
 	}
-
-	/* The slider itself */
 	.slider {
-		-webkit-appearance: none;  /* Override default CSS styles */
+		-webkit-appearance: none; 
 		appearance: none;
-		width: 100%; /* Full-width */
+		width: 100%; 
 		height: 15px;
-  	border-radius: 5px; 
-		background: #d3d3d3; /* Grey background */
-		outline: none; /* Remove outline */
-		opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-		-webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  		border-radius: 5px; 
+		background: #d3d3d3; 
+		outline: none; 
+		opacity: 0.7; 
+		-webkit-transition: .2s; 
 		transition: opacity .2s;
 	}
 
-	/* Mouse-over effects */
 	.slider:hover {
-		opacity: 1; /* Fully shown on mouse-over */
+		opacity: 1; 
 	}
 
-	/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 	.slider::-webkit-slider-thumb {
-		-webkit-appearance: none; /* Override default look */
+		-webkit-appearance: none;
 		appearance: none;
-		width: 25px; /* Set a specific slider handle width */
+		width: 25px; 
 		height: 25px;
   	border-radius: 50%; 
-		background: #008CBA; /* Green background */
-		cursor: pointer; /* Cursor on hover */
+		background: #008CBA; 
+		cursor: pointer; 
 	}
 
 	.slider::-moz-range-thumb {
-		width: 25px; /* Set a specific slider handle width */
+		width: 25px; 
 		height: 25px;
   	border-radius: 50%;
-		background: #008CBA; /* Green background */
-		cursor: pointer; /* Cursor on hover */
+		background: #008CBA; 
+		cursor: pointer; 
 	}
-
-	@media only screen and (max-device-width: 700px) {
+	.row { clear: left; padding: 6px; }
+    .row label { float: left; width: 10em; }
+    .row .field { display: block; margin-left: 10em; }
+    .row .field input, .row .field select {
+        width: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box; -webkit-box-sizing: border-box; -khtml-box-sizing: border-box;
+    }
+	/* @media only screen and (max-device-width: 700px) {
 	    center {
 		width: 100%;
 		height: 100vh;
 		overflow: auto;
 	    }
-	}
+	}  */
   </style>
 </body>
 
