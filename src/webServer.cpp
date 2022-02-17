@@ -344,6 +344,10 @@ void webServer_setup() {
     request->send(200, F("application/json"), goE_getStatus(id, fromApp));
   });
 
+  server.on( "/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS,"/favicon.ico", F("image/x-icon"));
+  });
+
 
   // add the SPIFFSEditor, which can be opened via "/edit"
   server.addHandler(new SPIFFSEditor("" ,"" ,LittleFS));//http_username,http_password));
