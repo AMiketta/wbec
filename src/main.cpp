@@ -17,6 +17,7 @@
 #include <WiFiManager.h>
 #include <webServer.h>
 #include <webSocket.h>
+#include <solarEdge.h>
 
 
 static bool _handlingOTA = false;
@@ -64,10 +65,11 @@ void setup() {
 
   mb_setup();
   mqtt_begin();
-  rfid_setup();
-  powerfox_setup();
-  pv_setup();
+  //rfid_setup();
+  //powerfox_setup();
+  //pv_setup();
   lm_setup();
+  se_setup();
   Serial.print(F("Boot time: ")); Serial.println(millis());
   Serial.print(F("Free heap: ")); Serial.println(ESP.getFreeHeap());
 }
@@ -82,11 +84,12 @@ void loop() {
     mqtt_handle();
     webServer_loop();
     webSocket_loop();
-    rfid_loop();
-    powerfox_loop(); 
-    pv_loop();
+    //rfid_loop();
+    //powerfox_loop(); 
+    // pv_loop();
     //pc_handle();
     lm_loop();
+    se_loop();
     delay(5);
   }
 }
