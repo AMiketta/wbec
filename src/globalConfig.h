@@ -20,6 +20,13 @@
 #define PIN_RST             0   // GPIO0, NodeMCU pin D3 
 #define PIN_SS             15   // GPIO15,NodeMCU pin D8
 
+// SolarEdge (sunspec) registers for modbusTCP
+#define REG_I_AC_Current 40071 // 40072 1 I_AC_Current uint16 Amps AC Total Current value
+#define REG_I_AC_Power 40083 //modbus register for "AC Power value", int16 in Watts 
+#define REG_I_AC_Power_SF 40084 // modbus register for "AC Power scale factor" int16
+#define REG_M_AC_Power 40206 // modbus  register for "Total Real Power (sum of active phases)" int16 in Watts
+#define REG_M_AC_Power_SF 40210 // modbus register for "AC Real Power Scale Factor" int16 SF
+
 extern char     cfgWbecVersion[];	           // wbec version
 extern char     cfgBuildDate[];	          	 // wbec build date
 

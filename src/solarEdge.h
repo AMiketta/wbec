@@ -4,11 +4,14 @@
 #include <Arduino.h>
 #include <ModbusEthernet.h>
 
+
+
 const char version[] = "build "  __DATE__ " " __TIME__;
 
 #define FILE_NEW (O_READ | O_WRITE | O_CREAT)
 
 extern bool isConnected;
+extern uint16_t ac_current;
 extern uint16_t power_inverter;
 extern uint16_t power_inverter_scale;
 extern uint16_t power_meter;

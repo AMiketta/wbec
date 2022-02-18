@@ -81,48 +81,48 @@ void rfid_setup() {
 
 
 void rfid_loop() {
-	if ((millis() - rfid_lastCall < CYCLE_TIME) || (rfid_enabled == false) || (millis() - rfid_lastDetect < INHIBIT_AFTER_DETECTION)) {
-		// avoid unnecessary frequent calls
-		return;
-	}
-  rfid_lastCall = millis();
+	// if ((millis() - rfid_lastCall < CYCLE_TIME) || (rfid_enabled == false) || (millis() - rfid_lastDetect < INHIBIT_AFTER_DETECTION)) {
+	// 	// avoid unnecessary frequent calls
+	// 	return;
+	// }
+  // rfid_lastCall = millis();
 
-  if ((rfid_plugged(rfid_chgStat_old) && !rfid_plugged(content[id][1])) || 
-    (!rfid_plugged(content[id][1]) && (rfid_lastReleased != 0) && (millis() - rfid_lastReleased > RELEASE_TIME))) {
-    // vehicle unplugged or not plugged within RELEASE_TIME --> RFID chip no longer allowed
-    rfid_released = false;
-    rfid_lastReleased = 0;
-    lm_storeRequest(id, 0);
-  }
-  rfid_chgStat_old = content[id][1];
+  // if ((rfid_plugged(rfid_chgStat_old) && !rfid_plugged(content[id][1])) || 
+  //   (!rfid_plugged(content[id][1]) && (rfid_lastReleased != 0) && (millis() - rfid_lastReleased > RELEASE_TIME))) {
+  //   // vehicle unplugged or not plugged within RELEASE_TIME --> RFID chip no longer allowed
+  //   rfid_released = false;
+  //   rfid_lastReleased = 0;
+  //   lm_storeRequest(id, 0);
+  // }
+  // rfid_chgStat_old = content[id][1];
 
 
-	// Check for new card
-	if (mfrc522.PICC_IsNewCardPresent()) {
-    // wait a little longer this time to avoid multiple reads
-    rfid_lastDetect = millis();
+	// // Check for new card
+	// if (mfrc522.PICC_IsNewCardPresent()) {
+  //   // wait a little longer this time to avoid multiple reads
+  //   rfid_lastDetect = millis();
 
-    mfrc522.PICC_ReadCardSerial();
+  //   mfrc522.PICC_ReadCardSerial();
 
-    // First 4 byte should be sufficient
-    sprintf(chipID, "%02x%02x%02x%02x", mfrc522.uid.uidByte[0], mfrc522.uid.uidByte[1], mfrc522.uid.uidByte[2], mfrc522.uid.uidByte[3]);
-    log(m, F("Detected: ") + String(chipID) + F(" ... "), false);
+  //   // First 4 byte should be sufficient
+  //   sprintf(chipID, "%02x%02x%02x%02x", mfrc522.uid.uidByte[0], mfrc522.uid.uidByte[1], mfrc522.uid.uidByte[2], mfrc522.uid.uidByte[3]);
+  //   log(m, F("Detected: ") + String(chipID) + F(" ... "), false);
     
-    // Search if this fits to a known chip
-    uint8_t k = 0;
-    while (strncasecmp(chipID, chip[k], RFID_CHIP_LEN - 1) != 0 && k < RFID_CHIP_MAX) {
-      k++;
-    };
-    if (k < RFID_CHIP_MAX) {
-      log(0, F("found: idx=") + String(k));
-      rfid_released = true;
-      rfid_lastReleased = millis();
-      // set current to max value
-      lm_storeRequest(id, content[id][15]);
-    } else {
-      log(0, F("unknown"));
-    }
-	}
+  //   // Search if this fits to a known chip
+  //   uint8_t k = 0;
+  //   while (strncasecmp(chipID, chip[k], RFID_CHIP_LEN - 1) != 0 && k < RFID_CHIP_MAX) {
+  //     k++;
+  //   };
+  //   if (k < RFID_CHIP_MAX) {
+  //     log(0, F("found: idx=") + String(k));
+  //     rfid_released = true;
+  //     rfid_lastReleased = millis();
+  //     // set current to max value
+  //     lm_storeRequest(id, content[id][15]);
+  //   } else {
+  //     log(0, F("unknown"));
+  //   }
+	// }
 }
 
 

@@ -150,6 +150,7 @@ void webServer_setup() {
     
     DynamicJsonDocument data(jsonSize);
     data[F("solaredge")][F("isConnected")] = String(isConnected);
+    data[F("power")][F("AC_Total")] = String(ac_current);
     data[F("power")][F("house")] = String(power_house);
     data[F("power")][F("inverter")] = String((int16_t) power_inverter);
     data[F("power")][F("inverter_scale")] = String((int16_t) power_inverter_scale);

@@ -67,7 +67,7 @@ void setup() {
   mqtt_begin();
   //rfid_setup();
   //powerfox_setup();
-  //pv_setup();
+  pv_setup();
   lm_setup();
   se_setup();
   Serial.print(F("Boot time: ")); Serial.println(millis());
@@ -86,7 +86,7 @@ void loop() {
     webSocket_loop();
     //rfid_loop();
     //powerfox_loop(); 
-    // pv_loop();
+    pv_loop();
     //pc_handle();
     lm_loop();
     se_loop();
