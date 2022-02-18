@@ -1,3 +1,4 @@
+// Copyright (c) 2022 andreas.miketta, MIT license
 #include <SPI.h>
 #include <globalConfig.h>
 #include <Ethernet.h>       // Ethernet library v2 is required
@@ -57,16 +58,12 @@ void se_loop() {
 
     isConnected = mb.isConnected(remote);
     if (isConnected) {   // Check if connection to Modbus Slave is established
-    
         mb.readHreg(remote, REG_I_AC_Current, &ac_current, 1, cb, 1);  //Power Inverter
         mb.readHreg(remote, REG_I_AC_Power, &power_inverter, 1, cb, 1);  //Power Inverter
         mb.readHreg(remote, REG_I_AC_Power_SF, &power_inverter_scale, 1, cb, 1); //Power Inverter Scale Factor
         mb.readHreg(remote, REG_M_AC_Power, &power_meter, 1, cb, 1);  //Power Zähler
         mb.readHreg(remote, REG_M_AC_Power_SF, &power_meter_scale, 1, cb, 1); //Power Zähler Scale Factor
         if (status == 0) {
-#ifdef DEBUG_SOLAREDGE
-            Serial.println("Modbus verbunden");
-#endif
             status = 1;
         }
      } else {  
@@ -101,15 +98,5 @@ void se_loop() {
     }
     power_house = s_power_inverter + (1 * -s_power_meter);
 
-    pv_setWatt((1 * -s_power_meter));
-#ifdef DEBUG
-    Serial.print("Leistung Umrichter: ");
-    Serial.print(s_power_inverter);   //Ausgabe von signed Wert
-    Serial.print(" Watt + Gesamt Haus: ");
-    Serial.print(s_power_meter);
-    Serial.print(" Watt");
-    Serial.print(" + Strombezug Haus: ");
-    Serial.print(power_house);
-    Serial.println(" Watt");
-#endif
+    pv_setWatt((1 * -s_power_meter)); // in pvAlgo werden die Werte einmal genau invertiert erwartet
 }

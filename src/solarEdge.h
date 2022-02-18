@@ -1,3 +1,4 @@
+// Copyright (c) 2022 andreas.miketta, MIT license
 #ifndef SOLAREDGE_H
 #define SOLAREDGE_H
 
