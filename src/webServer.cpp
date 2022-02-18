@@ -18,6 +18,7 @@
 #include <powerfox.h>
 #include <pvAlgo.h>
 #include <rfid.h>
+#include <solarEdge.h>
 #include <SPIFFSEditor.h>
 #include <webServer.h>
 #define WIFI_MANAGER_USE_ASYNC_WEB_SERVER
@@ -142,6 +143,23 @@ void webServer_setup() {
   server.on("/current", HTTP_GET, [](AsyncWebServerRequest *request){
     float tmp = content[0][53] / 10.0;
     request->send(200, F("text/plain"), String(tmp));
+  });
+
+  server.on("/solaredge", HTTP_GET, [](AsyncWebServerRequest *request){
+     uint16_t jsonSize = 2048;  // always 2048 byte
+    
+    DynamicJsonDocument data(jsonSize);
+    data[F("solaredge")][F("isConnected")] = String(isConnected);
+    data[F("power")][F("house")] = String(power_house);
+    data[F("power")][F("inverter")] = String((int16_t) power_inverter);
+    data[F("power")][F("inverter_scale")] = String((int16_t) power_inverter_scale);
+    data[F("power")][F("meter")] = String((int16_t) power_meter);
+    data[F("power")][F("meter_scale")] = String((int16_t) power_meter_scale);
+
+    String response;
+    serializeJson(data, response);
+    log(m, response);
+    request->send(200, F("application/json"), response);
   });
 
   server.on("/gpio", HTTP_GET, [](AsyncWebServerRequest *request){
