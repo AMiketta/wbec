@@ -7,7 +7,7 @@ function init()
 {
 	Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
 	Socket.onmessage = function(event) { processReceivedCommand(event); };
-	showPFoxElements("hidden");
+	//showPFoxElements("hidden");
 }
 
 // Update the current slider value (each time you drag the slider handle)
