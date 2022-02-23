@@ -29,6 +29,7 @@ char     cfgFoxPass[16];              // powerfox: Password
 char     cfgFoxDevId[16];             // powerfox: DeviceId
 uint8_t  cfgPvActive;                 // PV charging: Active (1) or inactive (0)
 uint8_t  cfgPvCycleTime;              // PV charging: cycle time (in seconds)
+uint8_t  cfgSolarEdgeCycleTime;       // PV charging: cycle time (in seconds)
 uint8_t  cfgPvLimStart;               // PV charging: Target current needed for starting (in 0.1A), e.g. 61=6.1A
 uint8_t  cfgPvLimStop;                // PV charging: Target current to stop charging when below (in 0.1A)
 uint8_t  cfgPvPhFactor;               // PV charging: Power/Current factor, e.g. 69: 1A equals 690W at 3phases, 23: 1A equals 230W at 1phase
@@ -106,30 +107,31 @@ void loadConfig() {
 		deserializeJson(doc, F("{}"));
 	}
 
-	strncpy(cfgApSsid,          doc["cfgApSsid"]            | "wbec",             sizeof(cfgApSsid));
-	strncpy(cfgApPass,          doc["cfgApPass"]            | "wbec1234",         sizeof(cfgApPass));
-	cfgCntWb                  = doc["cfgCntWb"]             | 1;
-	cfgMbCycleTime            = doc["cfgMbCycleTime"]       | 10; 
-	cfgMbDelay                = doc["cfgMbDelay"]           | 100UL; 
-	cfgMbTimeout              = doc["cfgMbTimeout"]         | 60000UL;
-	cfgStandby                = doc["cfgStandby"]           | 4UL; 
-	strncpy(cfgMqttIp,          doc["cfgMqttIp"]            | "",                 sizeof(cfgMqttIp));
-	cfgMqttPort               = doc["cfgMqttPort"]          | 1883UL;
-	strncpy(cfgMqttUser,        doc["cfgMqttUser"]          | "",                 sizeof(cfgMqttUser));
-	strncpy(cfgMqttPass,        doc["cfgMqttPass"]          | "",                 sizeof(cfgMqttPass));
-	strncpy(cfgNtpServer,       doc["cfgNtpServer"]         | "europe.pool.ntp.org", sizeof(cfgNtpServer));
-	strncpy(cfgFoxUser,         doc["cfgFoxUser"]           | "",                 sizeof(cfgFoxUser));
-	strncpy(cfgFoxPass,         doc["cfgFoxPass"]           | "",                 sizeof(cfgFoxPass));
-	strncpy(cfgFoxDevId,        doc["cfgFoxDevId"]          | "",                 sizeof(cfgFoxDevId));
-	cfgPvActive               = doc["cfgPvActive"]          | 0; 
-	cfgPvCycleTime            = doc["cfgPvCycleTime"]       | 30; 
-	cfgPvLimStart             = doc["cfgPvLimStart"]        | 61; 
-	cfgPvLimStop              = doc["cfgPvLimStop"]         | 50; 
-	cfgPvPhFactor             = doc["cfgPvPhFactor"]        | 69; 
-	cfgPvOffset               = doc["cfgPvOffset"]          | 0UL;
-	cfgTotalCurrMax           = doc["cfgTotalCurrMax"]      | 0UL;
-	cfgHwVersion              = doc["cfgHwVersion"]         | 15;
-	cfgWifiSleepMode          = doc["cfgWifiSleepMode"]     | 255;
+	strncpy(cfgApSsid,          doc["cfgApSsid"]             | "wbec",             sizeof(cfgApSsid));
+	strncpy(cfgApPass,          doc["cfgApPass"]             | "wbec1234",         sizeof(cfgApPass));
+	cfgCntWb                  = doc["cfgCntWb"]              | 1;
+	cfgMbCycleTime            = doc["cfgMbCycleTime"]        | 10; 
+	cfgMbDelay                = doc["cfgMbDelay"]            | 100UL; 
+	cfgMbTimeout              = doc["cfgMbTimeout"]          | 60000UL;
+	cfgStandby                = doc["cfgStandby"]            | 4UL; 
+	strncpy(cfgMqttIp,          doc["cfgMqttIp"]             | "",                 sizeof(cfgMqttIp));
+	cfgMqttPort               = doc["cfgMqttPort"]           | 1883UL;
+	strncpy(cfgMqttUser,        doc["cfgMqttUser"]           | "",                 sizeof(cfgMqttUser));
+	strncpy(cfgMqttPass,        doc["cfgMqttPass"]           | "",                 sizeof(cfgMqttPass));
+	strncpy(cfgNtpServer,       doc["cfgNtpServer"]          | "europe.pool.ntp.org", sizeof(cfgNtpServer));
+	strncpy(cfgFoxUser,         doc["cfgFoxUser"]            | "",                 sizeof(cfgFoxUser));
+	strncpy(cfgFoxPass,         doc["cfgFoxPass"]            | "",                 sizeof(cfgFoxPass));
+	strncpy(cfgFoxDevId,        doc["cfgFoxDevId"]           | "",                 sizeof(cfgFoxDevId));
+	cfgPvActive               = doc["cfgPvActive"]           | 0; 
+	cfgPvCycleTime            = doc["cfgPvCycleTime"]        | 30; 
+	cfgSolarEdgeCycleTime     = doc["cfgSolarEdgeCycleTime"] | 15; 
+	cfgPvLimStart             = doc["cfgPvLimStart"]         | 61; 
+	cfgPvLimStop              = doc["cfgPvLimStop"]          | 50; 
+	cfgPvPhFactor             = doc["cfgPvPhFactor"]         | 69; 
+	cfgPvOffset               = doc["cfgPvOffset"]           | 0UL;
+	cfgTotalCurrMax           = doc["cfgTotalCurrMax"]       | 0UL;
+	cfgHwVersion              = doc["cfgHwVersion"]          | 15;
+	cfgWifiSleepMode          = doc["cfgWifiSleepMode"]      | 255;
 	
 	LOG(m, "cfgWbecVersion: %s", cfgWbecVersion);
 	LOG(m, "cfgBuildDate: %s"  , cfgBuildDate);

@@ -48,6 +48,7 @@ extern char     cfgFoxPass[16];              // powerfox: Password
 extern char     cfgFoxDevId[16];             // powerfox: DeviceId
 extern uint8_t  cfgPvActive;                 // PV charging: Active (1) or inactive (0)
 extern uint8_t  cfgPvCycleTime;              // PV charging: cycle time (in seconds)
+extern uint8_t  cfgSolarEdgeCycleTime;      // SolardEdge: cycle time (in seconds)
 extern uint8_t  cfgPvLimStart;               // PV charging: Target current needed for starting (in 0.1A), e.g. 61=6.1A
 extern uint8_t  cfgPvLimStop;                // PV charging: Target current to stop charging when below (in 0.1A)
 extern uint8_t  cfgPvPhFactor;               // PV charging: Power/Current factor, e.g. 69: 1A equals 690W at 3phases, 23: 1A equals 230W at 1phase

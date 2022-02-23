@@ -50,7 +50,7 @@ void se_setup() {
 }
 
 void se_loop() {
-    if ((millis() - lastHandleCall < (uint16_t)cfgPvCycleTime * 1000))      // avoid unnecessary frequent calls
+    if ((millis() - lastHandleCall < (uint16_t)cfgSolarEdgeCycleTime * 1000))      // avoid unnecessary frequent calls
     {
 		return;
 	}
