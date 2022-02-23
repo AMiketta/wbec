@@ -7,9 +7,13 @@
 #include <pvAlgo.h>
 #include <globalConfig.h>
 
-IPAddress remote(192, 168, 178, 68);  // Address of Modbus Slave device
-ModbusIP mb;               // Declare ModbusTCP instance
+#define SOLAR_EDGE_PORT        1502
+#define SOLAR_EDGE_JSON_LEN     256
 
+IPAddress remote;  // Address of Modbus Slave device
+static ModbusIP mb;               // Declare ModbusTCP instance
+
+bool      solarEgdeActive            = false;
 bool isConnected = false;
 uint16_t ac_current = 0;
 uint16_t power_inverter = 0;
@@ -46,12 +50,18 @@ int16_t pow_int16(int16_t base, uint16_t exp)
 
 void se_setup() {
   delay(1000);              // give the Ethernet shield a second to initialize
-  mb.client();              // Act as Modbus TCP server
+  //mb.client();              // Act as Modbus TCP server
+  if (strcmp(cfgSolarEdgeIp, "") != 0) {
+		if (remote.fromString(cfgSolarEdgeIp)) {
+			mb.client(); // Act as Modbus TCP server
+			solarEgdeActive = true;
+		}
+	}
 }
 
 void se_loop() {
-    if ((millis() - lastHandleCall < (uint16_t)cfgSolarEdgeCycleTime * 1000))      // avoid unnecessary frequent calls
-    {
+    if ((millis() - lastHandleCall < (uint16_t)cfgSolarEdgeCycleTime * 1000) ||     // avoid unnecessary frequent calls
+			(solarEgdeActive == false)) {
 		return;
 	}
 	lastHandleCall = millis();
@@ -67,7 +77,7 @@ void se_loop() {
             status = 1;
         }
      } else {  
-        mb.connect(remote, 1502);           // Try to connect if no connection
+        mb.connect(remote, SOLAR_EDGE_PORT);           // Try to connect if no connection
         status = 0;
     }
     mb.task();                      // Common local Modbus task

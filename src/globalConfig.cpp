@@ -37,7 +37,7 @@ uint16_t cfgPvOffset;                 // PV charging: Offset for the available p
 uint16_t cfgTotalCurrMax;             // <don't use - still beta> Total current limit for load management (in 0.1A)
 uint8_t  cfgHwVersion;                // Selection of the used HW
 uint8_t  cfgWifiSleepMode;            // Set sleep type for power saving, recomendation is 255 (=no influence) or 0 (=WIFI_NONE_SLEEP)
-
+char     cfgSolarEdgeIp[16]; 	      // IP address of SolarEdge inverter, "" to disable 
 static bool createConfig() {
 	StaticJsonDocument<1024> doc;
 
@@ -132,6 +132,7 @@ void loadConfig() {
 	cfgTotalCurrMax           = doc["cfgTotalCurrMax"]       | 0UL;
 	cfgHwVersion              = doc["cfgHwVersion"]          | 15;
 	cfgWifiSleepMode          = doc["cfgWifiSleepMode"]      | 255;
+	strncpy(cfgSolarEdgeIp,     doc["cfgSolarEdgeIp"]       | "",                 sizeof(cfgSolarEdgeIp));
 	
 	LOG(m, "cfgWbecVersion: %s", cfgWbecVersion);
 	LOG(m, "cfgBuildDate: %s"  , cfgBuildDate);
