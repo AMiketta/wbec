@@ -19,6 +19,7 @@ static const uint8_t m = 10;
 static WebSocketsServer webSocket = WebSocketsServer(81);
 static uint32_t lastCall   = 0;
 static uint8_t  id         = 0;
+float  energyIWhenPluggedIn = 0;
 
 
 static void webSocketEvent(byte num, WStype_t type, uint8_t * payload, size_t length) {
@@ -59,11 +60,17 @@ void webSocket_loop() {
 	}
 	lastCall = millis();
 
+	float energyI = (float)((uint32_t) content[id][13] << 16 | (uint32_t)content[id][14]) / 1000.0;
+	if (content[id][1] < 3 || energyIWhenPluggedIn == 0){
+		energyIWhenPluggedIn = energyI;
+	}
+  
 	StaticJsonDocument<JSON_LEN> data;
 	data[F("id")]       = id;
 	data[F("chgStat")]  = content[id][1];
 	data[F("power")]    = content[id][10];
-	data[F("energyI")]  = (float)((uint32_t) content[id][13] << 16 | (uint32_t)content[id][14]) / 1000.0;
+	data[F("energyI")]  = energyI;
+	data[F("energyIP")] = energyI - energyIWhenPluggedIn;
 	data[F("currLim")]  = (float)content[id][53]/10.0;
 	data[F("watt")]     = pv_getWatt();
 	data[F("pvMode")]   = pv_getMode();

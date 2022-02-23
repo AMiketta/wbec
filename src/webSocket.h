@@ -5,5 +5,6 @@
 
 extern void webSocket_setup();
 extern void webSocket_loop();
+extern float  energyIWhenPluggedIn;            // Stores energyI when the Car was pluggedIn
 
 #endif /* WEBSOCKET_H */
