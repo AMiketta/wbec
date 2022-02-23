@@ -21,7 +21,7 @@ RTCVars rtc;                               // used to memorize a few global vari
 static uint32_t  lastHandleCall       = 0;
 static int32_t   watt                 = 0;  // power from powerfox API (neg. = 'Einspeisung', pos. = 'Bezug')
 static int32_t   availPowerPrev       = 0;  // availPower from previous cycle
-static pvMode_t  pvMode               = PV_OFF;
+static pvMode_t  pvMode               = PV_ACTIVE;
 
 
 void pvAlgo() {
@@ -98,7 +98,7 @@ void pvAlgo() {
 void pv_setup() {
 	// check config values
 	if (cfgPvActive == 0) {
-		pvMode = PV_ACTIVE;
+		pvMode = PV_OFF;
 	} else {
 		rtc.registerVar((char *)&pvMode);
 		rtc.registerVar(&availPowerPrev);
