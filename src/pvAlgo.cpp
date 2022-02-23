@@ -98,7 +98,7 @@ void pvAlgo() {
 void pv_setup() {
 	// check config values
 	if (cfgPvActive == 0) {
-		pvMode = PV_DISABLED;
+		pvMode = PV_ACTIVE;
 	} else {
 		rtc.registerVar((char *)&pvMode);
 		rtc.registerVar(&availPowerPrev);
